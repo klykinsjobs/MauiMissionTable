@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiMissionTable.Views.ShopPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:MauiMissionTable.ViewModels"
+    x:DataType="viewmodels:ShopViewModel"
+    BackgroundColor="{StaticResource ColorBackground}"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <Border Style="{StaticResource MissionPanelStyle}">
+                <VerticalStackLayout Spacing="8">
+                    
+                    <Label
+                        Text="Packs"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+                    <Button
+                        Text="Buy Pack (50 gold)"
+                        Command="{Binding BuyPackCommand}" />
+                    
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource MissionPanelStyle}">
+                <VerticalStackLayout Spacing="8">
+                    
+                    <Label
+                        Text="Boosts"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+                    <Button
+                        Text="Buy Rush Boost (2 premium)"
+                        Command="{Binding BuyRushBoostCommand}" />
+                    <Button
+                        Text="Buy XP Boost (2 premium)"
+                        Command="{Binding BuyXpBoostCommand}" />
+                    
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

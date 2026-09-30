@@ -1,0 +1,84 @@
+<ContentPage
+    x:Class="MauiMissionTable.Views.InventoryPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:MauiMissionTable.ViewModels"
+    x:DataType="viewmodels:InventoryViewModel"
+    BackgroundColor="{StaticResource ColorBackground}"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <Border Style="{StaticResource MissionPanelStyle}">
+                <VerticalStackLayout Spacing="8">
+                    
+                    <Label
+                        Text="Inventory"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+                    <Label
+                        Text="{Binding Gold, StringFormat='Gold: {0}'}" />
+                    <Label
+                        Text="{Binding Premium, StringFormat='Premium: {0}'}" />
+                    <Label
+                        Text="{Binding RushBoosts, StringFormat='Rush Boosts: {0}'}" />
+                    <Label
+                        Text="{Binding XpBoosts, StringFormat='XP Boosts: {0}'}" />
+                    <Label
+                        Text="{Binding Packs, StringFormat='Packs: {0}'}" />
+                    
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource MissionPanelStyle}">
+                <VerticalStackLayout Spacing="12">
+                    
+                    <Label
+                        Text="Passive Gold"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+                    <Label
+                        Text="{Binding PassiveGold}"
+                        FontSize="36"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Center" />
+                    <Label
+                        Text="{Binding PassiveGoldMax, StringFormat='Max: {0}'}"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource ColorTextSecondary}" />
+                    
+                    <Border
+                        BackgroundColor="{StaticResource ColorUnitFrame}"
+                        Stroke="{StaticResource ColorBorderStrong}"
+                        StrokeThickness="2"
+                        Padding="20"
+                        StrokeShape="RoundRectangle 24"
+                        HorizontalOptions="Center">
+
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CollectCommand}" />
+                        </Border.GestureRecognizers>
+
+                        <Label
+                            Text="COLLECT"
+                            FontSize="20"
+                            FontAttributes="Bold"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            TextColor="{StaticResource ColorTextGold}" />
+                        
+                    </Border>
+
+                    <Button
+                        Text="Upgrade Passive Capacity"
+                        Command="{Binding UpgradePassiveCommand}"
+                        HorizontalOptions="Center" />
+                    
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
