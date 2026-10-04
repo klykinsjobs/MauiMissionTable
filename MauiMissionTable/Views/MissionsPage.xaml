@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiMissionTable.Views.MissionsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:MauiMissionTable.ViewModels"
+    x:DataType="viewmodels:MissionsViewModel"
+    BackgroundColor="{StaticResource ColorBackground}"
+    Title="{Binding Title}">
+
+    <Grid Padding="16">
+
+        <CollectionView
+            ItemsSource="{Binding Missions}"
+            SelectionMode="None">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical" Span="1" />
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="viewmodels:MissionRow">
+
+                    <Border Style="{StaticResource MissionPanelStyle}"
+                            Stroke="{Binding Mission.Rarity, Converter={StaticResource RarityToBrushConverter}}"
+                            StrokeThickness="3">
+
+                        <Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenMissionCommand}"
+                                    CommandParameter="{Binding}" />
+                            </Grid.GestureRecognizers>
+
+                            <VerticalStackLayout Spacing="10">
+
+                                <HorizontalStackLayout Spacing="10">
+
+                                    <Label
+                                        Text="{Binding Mission.Title}"
+                                        HorizontalOptions="Start"
+                                        FontAttributes="Bold"
+                                        FontSize="20"
+                                        TextColor="{StaticResource ColorTextPrimary}" />
+
+                                    <Label
+                                        Text="{Binding Mission.Level, StringFormat='Level {0}'}"
+                                        HorizontalOptions="End"
+                                        FontSize="18"
+                                        TextColor="{StaticResource ColorTextSecondary}" />
+
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="10">
+
+                                    <Label
+                                        Text="{Binding Mission.Rarity}"
+                                        HorizontalOptions="Start"
+                                        FontSize="14"
+                                        TextColor="{StaticResource ColorTextSecondary}" />
+
+                                    <Label
+                                        Text="{Binding Mission.DurationText}"
+                                        HorizontalOptions="Center"
+                                        FontSize="14"
+                                        TextColor="{StaticResource ColorTextSecondary}" />
+
+                                    <Label
+                                        Text="{Binding Status}"
+                                        HorizontalOptions="End"
+                                        FontSize="14"
+                                        TextColor="{StaticResource ColorTextSecondary}" />
+
+                                </HorizontalStackLayout>
+
+                                <ProgressBar
+                                    Progress="{Binding Progress}"
+                                    HeightRequest="10" />
+
+                                <Label
+                                    Text="{Binding Mission.RewardsSummary}"
+                                    FontSize="14"
+                                    TextColor="{StaticResource ColorTextSecondary}" />
+
+                            </VerticalStackLayout>
+                        </Grid>
+
+                    </Border>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>

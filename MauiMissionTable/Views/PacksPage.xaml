@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiMissionTable.Views.PacksPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:MauiMissionTable.ViewModels"
+    xmlns:models="clr-namespace:MauiMissionTable.Models"
+    x:DataType="viewmodels:PacksViewModel"
+    BackgroundColor="{StaticResource ColorBackground}"
+    Title="{Binding Title}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="24">
+
+            <Border Style="{StaticResource MissionPanelStyle}">
+                <VerticalStackLayout Spacing="8">
+                    
+                    <Label
+                        Text="Packs"
+                        FontSize="20"
+                        FontAttributes="Bold" />
+                    <Label
+                        Text="{Binding Packs, StringFormat='Packs: {0}'}"
+                        FontSize="18"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource ColorTextSecondary}" />
+                    <Label
+                        Text="{Binding Status}"
+                        FontSize="18"
+                        HorizontalOptions="Center"
+                        TextColor="{StaticResource ColorTextSecondary}" />
+                    <Button
+                        Text="Open Pack"
+                        Command="{Binding OpenPackCommand}"
+                        HorizontalOptions="Center"
+                        Margin="0,10" />
+                    
+                </VerticalStackLayout>
+            </Border>
+
+            <Border Style="{StaticResource MissionPanelStyle}">
+                <CollectionView ItemsSource="{Binding LatestRewards}" SelectionMode="None">
+
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="1" />
+                    </CollectionView.ItemsLayout>
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="models:PackReward">
+
+                            <Border Style="{StaticResource UnitPanelStyle}"
+                                    Stroke="{Binding Rarity, Converter={StaticResource RarityToBrushConverter}}"
+                                    StrokeThickness="3">
+                                <VerticalStackLayout Spacing="10">
+                                    
+                                    <Border
+                                        BackgroundColor="{Binding Color}"
+                                        HeightRequest="25"
+                                        Stroke="#00000040"
+                                        StrokeThickness="1"
+                                        StrokeShape="RoundRectangle 16" />
+                                    <Label
+                                        Text="{Binding Title}"
+                                        FontAttributes="Bold"
+                                        FontSize="20" />
+                                    <Label
+                                        Text="{Binding Rarity}"
+                                        FontSize="14"
+                                        TextColor="{StaticResource ColorTextSecondary}" />
+                                    
+                                </VerticalStackLayout>
+                            </Border>
+
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application 
+    x:Class="MauiMissionTable.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:MauiMissionTable.Converters">
+
+    <Application.Resources>
+
+        <Color x:Key="ColorBackground">#121212</Color>
+        <Color x:Key="ColorPanel">#1E1E1E</Color>
+        <Color x:Key="ColorUnitFrame">#2A2A2A</Color>
+        <Color x:Key="ColorBorderLight">#FFFFFF20</Color>
+        <Color x:Key="ColorBorderStrong">#FFFFFF40</Color>
+
+        <Color x:Key="ColorTextPrimary">#FFFFFF</Color>
+        <Color x:Key="ColorTextSecondary">#CCCCCC</Color>
+        <Color x:Key="ColorTextGold">#FFD700</Color>
+
+        <Color x:Key="RarityCommon">#B0B0B0</Color>
+        <Color x:Key="RarityUncommon">#4CAF50</Color>
+        <Color x:Key="RarityRare">#2196F3</Color>
+        <Color x:Key="RarityEpic">#9C27B0</Color>
+        <Color x:Key="RarityLegendary">#FF9800</Color>
+
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="{StaticResource ColorTextPrimary}" />
+            <Setter Property="FontFamily" Value="OpenSansRegular" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#333333" />
+            <Setter Property="TextColor" Value="{StaticResource ColorTextGold}" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="14,10" />
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+
+        <Style TargetType="Border">
+            <Setter Property="Stroke" Value="{StaticResource ColorBorderLight}" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        </Style>
+
+        <Style x:Key="UnitPanelStyle" TargetType="Border">
+            <Setter Property="Stroke" Value="{StaticResource ColorBorderStrong}" />
+            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="BackgroundColor" Value="{StaticResource ColorUnitFrame}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 20" />
+            <Setter Property="Padding" Value="12" />
+            <Setter Property="Margin" Value="8" />
+        </Style>
+
+        <Style x:Key="MissionPanelStyle" TargetType="Border">
+            <Setter Property="Stroke" Value="{StaticResource ColorBorderLight}" />
+            <Setter Property="StrokeThickness" Value="1" />
+            <Setter Property="BackgroundColor" Value="{StaticResource ColorPanel}" />
+            <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+            <Setter Property="Padding" Value="14" />
+            <Setter Property="Margin" Value="8" />
+        </Style>
+
+        <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+        <converters:NotNullToBoolConverter x:Key="NotNullToBoolConverter" />
+        <converters:RarityToBrushConverter x:Key="RarityToBrushConverter" />
+        <converters:GreaterThanZeroConverter x:Key="GreaterThanZeroConverter" />
+
+    </Application.Resources>
+</Application>
