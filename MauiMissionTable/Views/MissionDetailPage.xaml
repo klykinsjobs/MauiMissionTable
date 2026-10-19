@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiMissionTable.Views.MissionDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:MauiMissionTable.ViewModels"
+    xmlns:models="clr-namespace:MauiMissionTable.Models"
+    x:DataType="viewmodels:MissionDetailViewModel"
+    BackgroundColor="{StaticResource ColorBackground}"
+    Title="{Binding Title}">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="24" Spacing="24">
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+
+                    <Border Style="{StaticResource MissionPanelStyle}"
+                            Stroke="{Binding Mission.Rarity, Converter={StaticResource RarityToBrushConverter}}"
+                            StrokeThickness="3">
+                        <VerticalStackLayout Spacing="12">
+
+                            <Label Text="{Binding Mission.Title}"
+                                   FontSize="24"
+                                   FontAttributes="Bold"
+                                   HorizontalOptions="Center" />
+                            <Label Text="{Binding Mission.Level, StringFormat='Level {0}'}"
+                                   HorizontalOptions="Center"
+                                   TextColor="{StaticResource ColorTextSecondary}" />
+                            <Label Text="{Binding Mission.Rarity}"
+                                   HorizontalOptions="Center"
+                                   TextColor="{StaticResource ColorTextSecondary}" />
+                            <Label Text="{Binding Mission.Duration, StringFormat='Duration: {0}'}"
+                                   HorizontalOptions="Center"
+                                   TextColor="{StaticResource ColorTextSecondary}" />
+                            <Label Text="Rewards"
+                                   FontAttributes="Bold"
+                                   FontSize="18"
+                                   HorizontalOptions="Center" />
+
+                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+
+                                <Label Text="{Binding Mission.GoldReward, StringFormat='Gold: {0}'}"
+                                       TextColor="{StaticResource ColorTextGold}"
+                                       IsVisible="{Binding Mission.GoldReward, Converter={StaticResource GreaterThanZeroConverter}}" />
+                                <Label Text="{Binding Mission.XpReward, StringFormat='XP: {0}'}"
+                                       TextColor="{StaticResource ColorTextSecondary}"
+                                       IsVisible="{Binding Mission.XpReward, Converter={StaticResource GreaterThanZeroConverter}}" />
+                                <Label Text="{Binding Mission.RushBoosts, StringFormat='Rush Boosts: {0}'}"
+                                       TextColor="{StaticResource ColorTextSecondary}"
+                                       IsVisible="{Binding Mission.RushBoosts, Converter={StaticResource GreaterThanZeroConverter}}" />
+                                <Label Text="{Binding Mission.XpBoosts, StringFormat='XP Boosts: {0}'}"
+                                       TextColor="{StaticResource ColorTextSecondary}"
+                                       IsVisible="{Binding Mission.XpBoosts, Converter={StaticResource GreaterThanZeroConverter}}" />
+                                <Label Text="{Binding Mission.PremiumReward, StringFormat='Premium: {0}'}"
+                                       TextColor="{StaticResource ColorTextSecondary}"
+                                       IsVisible="{Binding Mission.PremiumReward, Converter={StaticResource GreaterThanZeroConverter}}" />
+                                <Label Text="{Binding Mission.Packs, StringFormat='Packs: {0}'}"
+                                       TextColor="{StaticResource ColorTextSecondary}"
+                                       IsVisible="{Binding Mission.Packs, Converter={StaticResource GreaterThanZeroConverter}}" />
+
+                            </HorizontalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                    <Border Grid.Column="1" Style="{StaticResource MissionPanelStyle}">
+                        <VerticalStackLayout Spacing="12">
+
+                            <Label Text="Assigned Units"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   HorizontalOptions="Center" />
+
+                            <CollectionView ItemsSource="{Binding AssignedUnits}"
+                                ItemsLayout="HorizontalList"
+                                SelectionMode="None"
+                                HorizontalOptions="Center">
+
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="models:Unit">
+
+                                        <Border WidthRequest="90"
+                                                HeightRequest="120"
+                                                BackgroundColor="{StaticResource ColorUnitFrame}">
+
+                                            <Grid>
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveUnitCommand}"
+                                                                          CommandParameter="{Binding}" />
+                                                </Grid.GestureRecognizers>
+
+                                                <VerticalStackLayout Padding="6" Spacing="4">
+                                                    
+                                                    <Border BackgroundColor="{Binding Color}"
+                                                            HeightRequest="50"
+                                                            Stroke="#00000040"
+                                                            StrokeThickness="1"
+                                                            StrokeShape="RoundRectangle 10" />
+                                                    <Label Text="{Binding Title}"
+                                                           FontAttributes="Bold"
+                                                           FontSize="12" />
+                                                    <Label Text="{Binding Level, StringFormat='Lv {0}'}"
+                                                           FontSize="10"
+                                                           TextColor="{StaticResource ColorTextSecondary}" />
+                                                    
+                                                </VerticalStackLayout>
+                                            </Grid>
+
+                                        </Border>
+
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+
+                            </CollectionView>
+
+                            <HorizontalStackLayout Spacing="6" HorizontalOptions="Center">
+
+                                <Button Text="Auto Assign Best"
+                                        Command="{Binding AutoAssignCommand}"
+                                        HorizontalOptions="Center" />
+                                <Label Text="{Binding SuccessChance, StringFormat='Success Chance: {0}%'}"
+                                       FontSize="18"
+                                       TextColor="{StaticResource ColorTextGold}"
+                                       HorizontalOptions="Center" />
+
+                            </HorizontalStackLayout>
+
+                        </VerticalStackLayout>
+                    </Border>
+
+                </Grid>
+
+                <Border Style="{StaticResource MissionPanelStyle}"
+                        IsVisible="{Binding ShowUnitSelection}">
+                    <CollectionView
+                        ItemsSource="{Binding Units}"
+                        ItemsLayout="HorizontalList"
+                        SelectionMode="None">
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Unit">
+
+                                <Border Style="{StaticResource UnitFrameStyle}"
+                                        Stroke="{Binding Rarity, Converter={StaticResource RarityToBrushConverter}}">
+
+                                    <Grid>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AssignUnitCommand}"
+                                                CommandParameter="{Binding}" />
+                                        </Grid.GestureRecognizers>
+
+                                        <HorizontalStackLayout Spacing="12" Padding="10">
+
+                                            <Border BackgroundColor="{Binding Color}"
+                                                    WidthRequest="50"
+                                                    HeightRequest="50"
+                                                    Stroke="#00000040"
+                                                    StrokeThickness="1"
+                                                    StrokeShape="RoundRectangle 10" />
+
+                                            <VerticalStackLayout>
+                                                
+                                                <Label
+                                                    Text="{Binding Title}"
+                                                    FontAttributes="Bold" />
+                                                <Label
+                                                    Text="{Binding Level, StringFormat='Lv {0}'}"
+                                                    FontSize="12"
+                                                    TextColor="{StaticResource ColorTextSecondary}" />
+                                                
+                                            </VerticalStackLayout>
+
+                                        </HorizontalStackLayout>
+                                    </Grid>
+
+                                </Border>
+
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+
+                    </CollectionView>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <VerticalStackLayout Grid.Row="1" Padding="20" Spacing="12">
+
+            <Button
+                Text="Start Mission"
+                Command="{Binding StartMissionCommand}"
+                IsEnabled="{Binding CanStartMission}" />
+            <ProgressBar
+                Progress="{Binding MissionProgress}"
+                HeightRequest="12" />
+            <Button
+                Text="Rush Mission"
+                Command="{Binding RushCommand}"
+                IsEnabled="{Binding CanRushMission}"
+                BackgroundColor="#AA5500"
+                TextColor="White" />
+            <Button
+                Text="Claim Rewards"
+                Command="{Binding ClaimCommand}"
+                IsEnabled="{Binding CanClaimMission}" />
+
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

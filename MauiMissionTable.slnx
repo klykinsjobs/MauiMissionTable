@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="MauiMissionTable/MauiMissionTable.csproj" />
+  <Project Path="MauiMissionTableTests/MauiMissionTableTests.csproj" Id="7242c7ef-30b6-4e5a-95a5-d589efb42422" />
+</Solution>

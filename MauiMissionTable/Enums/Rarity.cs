@@ -1,0 +1,11 @@
+﻿namespace MauiMissionTable.Enums
+{
+    public enum Rarity
+    {
+        Common,
+        Uncommon,
+        Rare,
+        Epic,
+        Legendary
+    }
+}
